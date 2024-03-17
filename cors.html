@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function getPartners(){
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNDA4ODYwLCJpYXQiOjE3MDA0MDUyNjAsImp0aSI6Ijc0YTZhNGUxNjkyMTQ1MTM4NjQzY2UzZGMzZDMzZTc5IiwidXNlcl9pZCI6N30.a4KnqGiTgP5h4XbjK9d8_yMEAzKbKQ4bN-76XmediRo"
+            $.ajax({
+                url:"http://localhost:8000/doi-tac/api/",
+                type: "GET",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                
+                    success: function(data) {
+                        console.log(data)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                
+            });
+        }
+    </script>
+    <button onclick="getPartners()">Get Partners</button>
+
+
+</body>
+</html>
