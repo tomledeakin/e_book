@@ -1,0 +1,10 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<h1>Danh muc san pham</h1>
+<hr/>
+
+{% for promotion in promotion_list %}
+    <p>{{ promotion.image }}</p>
+{% endfor %}
+
+{% endblock content %}
