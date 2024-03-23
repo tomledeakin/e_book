@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<h1>{{ category.category_name }}</h1>
+<hr/>
+
+
+
+
+<div class="row">
+
+    {% for item in product %}
+    
+    <div class="col-6 col-md-4 col-lg-4 p-2">
+    
+    <div class="card" style="width: 18rem; background-color: #FFD6F4">
+        {% if item.image %}
+        <img src="{{item.image.url}}" class="card-img-top" alt="{{item.product_name}}" width="150" height="400">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title"><a href = "{% url 'product:product_detail' item.id %}" style="color: #7A32C0"> {{ item.product_name }} </a></h5>
+          <p class="card-text" style="color: #7A32C0">{{ item.author }}</p>
+          <p class="card-text" style="color: #7A32C0"><b>${{ item.price }}</b></p>
+    
+          <button class="btn add-to-cart" data-item-id="{{item.id}}" data-action="add" style="background-color: #D6FFF8; color: #7A32C0">Add To Cart</button>
+        
+        </div>
+    
+      </div>
+    
+    </div>
+    
+    {% endfor %}
+    
+    </div>
+
+
+
+
+
+{% endblock content %}
