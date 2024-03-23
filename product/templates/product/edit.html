@@ -1,0 +1,16 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<h1>Cap nhat san pham</h1>
+<hr/>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.as_p }} 
+
+    <button type="submit" class="btn btn-primary p-2">Xac nhan</button>
+</form>
+
+{% endblock content %}
+

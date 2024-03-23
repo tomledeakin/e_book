@@ -1,0 +1,102 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col"> 
+    <!-- Search Start -->
+    {% comment %} <form action="" method="GET">
+      {% csrf_token %}
+      <div class="d-flex">
+        <label class="p-2" for="keywordInput">Tu khoa</label>
+        <div class="p-2">
+          <input type="text" name="keyword" value="{{keyword}}" />
+        </div>
+        <button type="submit" class="btn btn-primary p-2">Tim kiem</button>
+      </div>
+    </form> {% endcomment %}
+    <!-- Search End -->
+    <h1>Book List</h1>
+<br/>
+    {% if author %}
+    <a href="{% url 'product:product_add' %}" class="btn" style="background-color: #7A32C0; color:white">Add New</a>
+    {% endif %}
+  </div>
+  <div class="col d-flex justify-content-end">
+    <!-- Sort Start -->
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #7A32C0">
+        Arrange
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="?sort=-created_at{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Newest</a></li>
+        <li><a class="dropdown-item" href="?sort=created_at{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Oldest</a></li>
+        <li><a class="dropdown-item" href="?sort=product_name{% for k, v in request.GET.items %}{% if k != 'sort' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Book Name</a></li>
+      </ul>
+    </div>
+    <!-- Sort End -->
+
+    <!-- Limit Start -->
+    <div class="dropdown mx-2">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #7A32C0">
+        Limit
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="?limit=3{% for k, v in request.GET.items %}{% if k != 'limit' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">3</a></li>
+        <li><a class="dropdown-item" href="?limit=6{% for k, v in request.GET.items %}{% if k != 'limit' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">6</a></li>
+        <li><a class="dropdown-item" href="?limit=9{% for k, v in request.GET.items %}{% if k != 'limit' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">9</a></li>
+      </ul>
+    </div>
+    <!-- Limit End -->
+</div>
+
+<br/>
+<br/>
+
+<div class="row">
+
+{% for item in product_list %}
+
+<div class="col-6 col-md-4 col-lg-4 p-2">
+
+<div class="card" style="width: 18rem; background-color: #FFD6F4">
+    {% if item.image %}
+    <img src="{{item.image.url}}" class="card-img-top" alt="{{item.product_name}}" width="150" height="400">
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title"><a href = "{% url 'product:product_detail' item.id %}" style="color: #7A32C0"> {{ item.product_name }} </a></h5>
+      <p class="card-text" style="color: #7A32C0">{{ item.author }}</p>
+      <p class="card-text" style="color: #7A32C0"><b>${{ item.price }}</b></p>
+
+      <button class="btn add-to-cart" data-item-id="{{item.id}}" data-action="add" style="background-color: #D6FFF8; color: #7A32C0">Add To Cart</button>
+    
+    </div>
+
+  </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+<nav>
+  <ul class="pagination">
+    <li class="page-item {% if not product_list.has_previous %}disabled{% endif %}">
+      <a class="page-link" href="?page={%if product_list.has_previous %}{{ product_list.previous_page_number }}{% endif %}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Previous</a>
+    </li>
+
+    {% for item in range_pages %}
+
+    <li class="page-item {% if item == product_list.number %}active{% endif %}" aria-current="page" >
+      <a  class="page-link" href="{% if item == product_list.number %}#{% else %}?page={{item}}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}{% endif %} " style="background-color: #FFD6F4; color:black">{{ item }} / {{product_list.paginator.num_pages}}</a>
+    </li>
+
+    {% endfor %}
+
+    <li class="page-item {% if not product_list.has_next %}disabled{% endif %}">
+      <a class="page-link" href="?page={%if product_list.has_next %}{{ product_list.next_page_number }}{% endif %}{% for k, v in request.GET.items %}{% if k != 'page' %}&{{ k }}={{ v }}{% endif %}{% endfor %}">Next</a>
+    </li>
+  </ul>
+</nav>
+
+{% endblock content %}
+

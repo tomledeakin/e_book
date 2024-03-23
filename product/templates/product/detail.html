@@ -1,0 +1,26 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
+
+<h1>{{ product.product_name }}</h1> 
+<p><b>by {{ product.author }}</b></p>
+<p>{{ product.description|safe }}</p>
+<p>{{ product.summary }}</p>
+<p>{{ product.price }}</p>
+{% if product.file %}
+    <a href="{{product.file.url}}" target="_blank">{{product.get_file_name}}</a>
+{% endif %}
+
+{% comment %} {% if product.url %}
+    <div class="embed-responsive embed-responsive-16by9">
+      <iframe class="embed-responsive-item" src="{{product.url}}" allowfullscreen></iframe>
+    </div>
+{% endif %} {% endcomment %}
+<br/>
+{% if author %}
+<a href="{% url 'product:product_edit' product.id %}" class="btn btn-primary">Edit</a>
+<a href="{% url 'product:product_delete' product.id %}" class="btn btn-primary">Delete</a>
+{% endif %}
+{% endblock content %}
+
