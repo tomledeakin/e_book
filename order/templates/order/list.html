@@ -1,0 +1,32 @@
+{% extends 'home/base.html' %}
+{% block content %}
+<h1>Order History</h1>
+<hr/>
+
+<div class="row">
+
+    {% for order in order_list %}
+    {% if customer%}
+    <div class="col-6 col-md-4 col-lg-4 p-2">
+
+        <div class="card" style="width: 18rem; background-color: #FFD6F4">
+            <div class="card-body">
+              <h5 class="card-title"><a style="color: #7A32C0"> {{ order.order_number }} </a></h5>
+              <p class="card-text" style="color: #7A32C0">{{ order.created_at }}</p>
+        
+              <a class="btn" href = "{% url 'order:order_detail' order.id %}" style="background-color: #D6FFF8; color: #7A32C0">Show More</a>
+            
+            </div>
+        
+          </div>
+        
+        </div>
+
+
+
+{% endif %}
+{% endfor %}
+
+</div>
+
+{% endblock content %}

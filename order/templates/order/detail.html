@@ -1,0 +1,53 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+
+<div class="col-lg-7">
+
+    <a class="btn" href="{% url 'order:order_list' %}" style="background-color:#08f494;">Order History
+
+        
+
+        </a>
+    <hr>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <p class="mb-1">Shopping cart</p>
+        <p class="mb-0">You have {{order_detail|length}} items in your cart</p>
+    </div>
+    </div>
+
+    {% for item in order_detail %}
+
+    <div class="card mb-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+        <div class="d-flex flex-row align-items-center">
+            <div>
+            <img
+                src="{{item.product.image.url}}"
+                class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+            </div>
+            <div class="ms-3">
+            <h5>{{item.product.product_name}}</h5>
+            <p class="small mb-0">{{item.product.description|safe}}</p>
+            </div>
+        </div>
+        <div class="d-flex flex-row align-items-center">
+            <div style="width: 30px;">
+            <h5 class="fw-normal mb-0">{{item.quantity}}</h5>
+            </div>
+            <div style="width: 120px;">
+            <h5 class="mb-0">x ${{item.product.price|floatformat:"0g"}}</h5>
+            </div>
+            <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+{% endblock content %}
