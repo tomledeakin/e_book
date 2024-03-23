@@ -32,4 +32,4 @@ We welcome contributions to improve micro-BooK. If you have suggestions for new 
 
 ---
 
-Enjoy exploring and happy reading!
+Enjoy exploring and happy coding!
